@@ -9,14 +9,13 @@
 <!-- assets에 저장되어 있는 파일 -->
 <!-- 추후에 파일로 여러 사진 받아 올 예정 -->
 
-
 <div class="container">
   <div class="row">
     <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
       <h1 class="text-center">Load Image</h1>
       <form [formGroup]="form" (ngSubmit)="onSubmit(fileInput.files)">
         <div class="form-group">
-          <img *ngIf="imageSrc" [src]="imageSrc" class="avatar">
+          <img *ngIf="imageSrc" [src]="imageSrc" class="avatar" id="liver-image" (click)="clickEvent($event)">
           <div class="btns clearfix">
             <label class="btn btn-file btn-cancel pull-left">Pick an image
               <input type="file" accept="image/*" (change)="onFileChange(fileInput.files)" #fileInput>
@@ -34,4 +33,7 @@
   </div>
 </div>
 
+
 <button (click)="goBack()">go back</button>
+
+<div id="info"></div>

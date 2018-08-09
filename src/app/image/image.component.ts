@@ -4,7 +4,6 @@ import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
-
 @Component({
   selector: 'app-image',
   templateUrl: './image.component.html',
@@ -16,7 +15,6 @@ export class ImageComponent implements OnInit {
   form: FormGroup;
   loading = false;
   imageSrc = '/assets/images/liver.jpg';
-
 
   result; // file upload 수행 이후 서버로부터 수신한 데이터
 
@@ -76,11 +74,34 @@ export class ImageComponent implements OnInit {
     return this.form.get('avatar');
   }
 
+  clickEvent(event) {
+
+    // 페이지 전체 대한 것
+    const px = event.pageX;
+    const py = event.pageY;
+
+    const cs = event.clientX;
+    const cy = event.clientY;
+
+    console.log(px);
+    console.log(py);
+
+    console.log(cs);
+    console.log(cy);
+
+    const style = 'left: ' + cs + 'px; top: ' + py + 'px';
+
+    console.log(style);
+    const box = document.getElementById('info');
+    box.setAttribute('style', style);
+
+  }
+
   ngOnInit() {
   }
 
   goBack(): void {
-  this.location.back();
-}
+    this.location.back();
+  }
 
 }
