@@ -13,10 +13,10 @@
 }
 
 .btn {
-  min-width: 100px;
+  min-width: 85px;
   border-radius: 2px;
   font-size: 12px;
-  color: #fff;
+  color: #121212;
   margin: 10px auto;
   border-color: transparent;
 }
@@ -38,7 +38,7 @@
 }
 
 .btn-save {
-  background-color: #121212;
+  background-color: #ffd9bf;
 }
 
 #info {
@@ -49,3 +49,5 @@
   border: 2px solid yellow;
 
 }
+
+

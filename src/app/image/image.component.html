@@ -15,18 +15,28 @@
       <h1 class="text-center">Load Image</h1>
       <form [formGroup]="form" (ngSubmit)="onSubmit(fileInput.files)">
         <div class="form-group">
-          <img *ngIf="imageSrc" [src]="imageSrc" class="avatar" id="liver-image" (click)="clickEvent($event)">
+          <img *ngFor='let url of urls'  [src]="url" class="avatar" height="400" (click)="clickEvent($event)">
+          <!--<img *ngIf="imageSrc" [src]="imageSrc" class="avatar" id="liver-image" (click)="clickEvent($event)">-->
           <div class="btns clearfix">
-            <label class="btn btn-file btn-cancel pull-left">Pick an image
-              <input type="file" accept="image/*" (change)="onFileChange(fileInput.files)" #fileInput>
-            </label>
+            <!--<label class="btn btn-file btn-cancel pull-left">PICK IMAGES-->
+            <!--<input type="file" accept="image/*" (change)="onFileChange(fileInput.files)" #fileInput multiple>-->
+            <!--</label>-->
+            <input type='file' (change)="onFileChange(fileInput.files)" multiple accept="image/*" #fileInput>
+
+            <select type="file" class="form-control">
+              <option *ngFor="let file of fileInput.files; let i=index">
+              {{ i+1 }}: {{ file.name }}</option>
+            </select>
+
             <button type="submit" class="btn btn-save pull-right" [disabled]="form.invalid || loading">
               Save!
               <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i>
             </button>
+
           </div>
         </div>
       </form>
+
       <pre>{{ form.value | json }}</pre>
       <pre>{{ result | json }}</pre>
     </div>
@@ -37,3 +47,23 @@
 <button (click)="goBack()">go back</button>
 
 <div id="info"></div>
+
+<!--<script>-->
+  <!--var slideIndex = 1;-->
+  <!--showDivs(slideIndex);-->
+
+  <!--function plusDivs(n) {-->
+    <!--showDivs(slideIndex += n);-->
+  <!--}-->
+
+  <!--function showDivs(n) {-->
+    <!--var i;-->
+    <!--var x = document.getElementsByClassName("mySlides");-->
+    <!--if (n > x.length) {slideIndex = 1}-->
+    <!--if (n < 1) {slideIndex = x.length}-->
+    <!--for (i = 0; i < x.length; i++) {-->
+      <!--x[i].style.display = "none";-->
+    <!--}-->
+    <!--x[slideIndex-1].style.display = "block";-->
+  <!--}-->
+<!--</script>-->

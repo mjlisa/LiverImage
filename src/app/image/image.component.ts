@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -10,11 +10,13 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./image.component.css']
 })
 export class ImageComponent implements OnInit {
+  @ViewChild('fileInput') fileInput: ElementRef;
+
   apiUrl = 'http://localhost:5500';
 
   form: FormGroup;
   loading = false;
-  imageSrc = '/assets/images/liver.jpg';
+  imageSrc = '/assets/images/new.png';
 
   result; // file upload 수행 이후 서버로부터 수신한 데이터
 
@@ -27,39 +29,70 @@ export class ImageComponent implements OnInit {
     });
   }
 
+  urls = [];
+
+  // onFileChange(files: FileList) {
+  //
+  //   if (files && files.length > 0) {
+  //
+  //      const file = files[0];
+  //
+  //       // For Preview
+  //       const reader = new FileReader();
+  //
+  //       reader.readAsDataURL(file);
+  //       reader.onload = () => {
+  //         this.imageSrc = reader.result;
+  //       };
+  //
+  //       this.avatar.setValue(file.name);
+  //
+  //       console.log(file);
+  //       console.log(files.length);
+  //
+  //     }
+  // }
 
   onFileChange(files: FileList) {
-    console.log('filefilefile');
     if (files && files.length > 0) {
-      // For Preview
-      const reader = new FileReader();
+      const filesAmount = files.length;
+
       const file = files[0];
 
-      /* 브라우저는 보안 문제로 인해 파일 경로의 참조를 허용하지 않는다.
-        따라서 파일 경로를 img 태그에 바인딩할 수 없다.
-        FileReader.readAsDataURL 메소드를 사용하여 이미지 파일을 읽어
-        base64 인코딩된 스트링 데이터를 취득한 후, img 태그에 바인딩한다. */
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.imageSrc = reader.result;
-      };
+      for (let i = 0; i < filesAmount; i++) {
+        const reader = new FileReader();
 
-      /* reactive form에서 input[type="file"]을 지원하지 않는다.
-        즉 파일 선택 시에 값이 폼컨트롤에 set되지 않는다
-        https://github.com/angular/angular.io/issues/3466
-        form validation을 위해 file.name을 폼컨트롤에 set한다. */
-      this.avatar.setValue(file.name);
+        reader.readAsDataURL(file);
+
+        reader.onload = () => {
+          this.urls.push(reader.result);
+        };
+
+        console.log(files.length);
+        this.avatar.setValue(file.name);
+
+      }
+
     }
   }
+
 
   onSubmit(files: FileList) {
     console.log('submitsubmit');
     const formData = new FormData();
-    formData.append('avatar', files[0]);
+
+    // console.log(files);
+
+    for (let i = 0; i < files.length; i++) {
+      console.log(files);
+      formData.append('avatar', files[i]);
+    }
+
+    // formData.append('avatar', files[0]);
 
     this.loading = true;
     // Send data (payload = formData)
-    console.log(formData.get('avatar'));
+    // console.log(formData.get('avatar'));
 
     // 폼데이터를 서버로 전송한다.
     this.http.post(`${this.apiUrl}/images`, formData)
@@ -76,18 +109,18 @@ export class ImageComponent implements OnInit {
 
   clickEvent(event) {
 
-    // 페이지 전체 대한 것
-    const px = event.pageX;
+    // 브라우저 좌표
+    // const px = event.pageX;
     const py = event.pageY;
 
     const cs = event.clientX;
-    const cy = event.clientY;
+    // const cy = event.clientY;
 
-    console.log(px);
+    // console.log(px);
     console.log(py);
 
     console.log(cs);
-    console.log(cy);
+    // console.log(cy);
 
     const style = 'left: ' + cs + 'px; top: ' + py + 'px';
 
@@ -102,6 +135,28 @@ export class ImageComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+
+  // 구현 중
+  selectChangeHandler (files: FileList, event) {
+    console.log(event.files);
+
+    // const selectFile = event.target.file;
+
+    const reader = new FileReader();
+    const file = event.target.files[0];
+    this.result = file;
+
+
+    reader.readAsDataURL(file[0]);
+    reader.onload = () => {
+      this.imageSrc = reader.result;
+    };
+
+
+    this.form = event.target.file;
+    console.log(this.form);
   }
 
 }
