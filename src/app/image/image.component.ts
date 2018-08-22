@@ -16,7 +16,9 @@ export class ImageComponent implements OnInit {
 
   form: FormGroup;
   loading = false;
-  imageSrc = '/assets/images/new.png';
+  // imageSrc = '/assets/images/new.png';
+  urls = [];
+
 
   result; // file upload 수행 이후 서버로부터 수신한 데이터
 
@@ -28,8 +30,6 @@ export class ImageComponent implements OnInit {
       avatar: ['', Validators.required]
     });
   }
-
-  urls = [];
 
   // onFileChange(files: FileList) {
   //
@@ -54,7 +54,6 @@ export class ImageComponent implements OnInit {
   // }
 
   onFileChange(files: FileList) {
-    if (files && files.length > 0) {
       const filesAmount = files.length;
 
       const file = files[0];
@@ -73,7 +72,6 @@ export class ImageComponent implements OnInit {
 
       }
 
-    }
   }
 
 
@@ -139,24 +137,24 @@ export class ImageComponent implements OnInit {
 
 
   // 구현 중
-  selectChangeHandler (files: FileList, event) {
-    console.log(event.files);
-
-    // const selectFile = event.target.file;
-
-    const reader = new FileReader();
-    const file = event.target.files[0];
-    this.result = file;
-
-
-    reader.readAsDataURL(file[0]);
-    reader.onload = () => {
-      this.imageSrc = reader.result;
-    };
-
-
-    this.form = event.target.file;
-    console.log(this.form);
-  }
+  // selectChangeHandler (files: FileList, event) {
+  //   console.log(event.files);
+  //
+  //   // const selectFile = event.target.file;
+  //
+  //   const reader = new FileReader();
+  //   const file = event.target.files[0];
+  //   this.result = file;
+  //
+  //
+  //   reader.readAsDataURL(file[0]);
+  //   reader.onload = () => {
+  //     this.imageSrc = reader.result;
+  //   };
+  //
+  //
+  //   this.form = event.target.file;
+  //   console.log(this.form);
+  // }
 
 }

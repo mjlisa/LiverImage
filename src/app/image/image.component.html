@@ -15,7 +15,7 @@
       <h1 class="text-center">Load Image</h1>
       <form [formGroup]="form" (ngSubmit)="onSubmit(fileInput.files)">
         <div class="form-group">
-          <img *ngFor='let url of urls'  [src]="url" class="avatar" height="400" (click)="clickEvent($event)">
+          <img *ngFor='let url of urls'  [src]="url" class="avatar" height="200" (click)="clickEvent($event)">
           <!--<img *ngIf="imageSrc" [src]="imageSrc" class="avatar" id="liver-image" (click)="clickEvent($event)">-->
           <div class="btns clearfix">
             <!--<label class="btn btn-file btn-cancel pull-left">PICK IMAGES-->
